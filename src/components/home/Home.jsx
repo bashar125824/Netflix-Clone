@@ -7,7 +7,7 @@ export default function Home() {
     const [movies, setMovies] = useState([]);
 
     async function getData() {
-        let response = await fetch(`${process.env.REACT_APP_SERVER}/movies`);
+        let response = await fetch("https://bashar-app.herokuapp.com/trending");
         let data = await response.json();
 
         setMovies(data);
