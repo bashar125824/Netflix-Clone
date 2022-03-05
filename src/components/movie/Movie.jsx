@@ -25,7 +25,6 @@ let Movie = ({ movies }) => {
                                 <Card.Img variant="top" src={movie.image} />
                                 <Card.Body>
                                     <Card.Title> Title: {movie.title}</Card.Title>
-                                
                                     <Card.Text>
                                         {movie.overview}
                                     </Card.Text>
