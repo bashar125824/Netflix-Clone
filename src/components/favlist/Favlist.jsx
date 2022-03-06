@@ -1,37 +1,40 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import swal from "sweetalert";
 
-export default function Favlist({ movies, getFavMovie }) {
+export default function Favlist() {
+
+    const [movies, setMovies] = useState(null);
+    //"https://bashar-app.herokuapp.com/trending"
+    async function getData() {
+        let response = await fetch("https://bashar-app.herokuapp.com/getMovie");
+        let data = await response.json();
+        console.log(data);
+        setMovies(data);
+
+    };
+    useEffect(() => {
+        getData();
+
+    }, []);
     function handelDelete(id) {
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
-                swal("Poof! Your imaginary file has been deleted!", {
-                    icon: "success",
-                });
-                // if the user confirm deleteing it will delete from the database
-                const url = `${process.env.REACT_APP_SERVER}/deleteFavMovie/${id}`;
-                const response = fetch(url, {
-                    method: "DELETE", // *GET, POST, PUT, DELETE, etc
-                }).then(() => {
-                    // we recall the getFavRecipe to get the data from the server again after deleting and
-                    // it will rernder the component because it is modifying the state
-                    getFavMovie();
-                });
-            } else {
-                swal("Your imaginary file is safe!");
-            }
+        const url = `https://bashar-app.herokuapp.com/getMovie/deleteFavMovie/${id}`;
+        const response = fetch(url, {
+            method: "DELETE", // *GET, POST, PUT, DELETE, etc
+        }).then(() => {
+            getData();
+            // we recall the getFavRecipe to get the data from the server again after deleting and
+            // it will rernder the component because it is modifying the state
+            // getFavMovie();
         });
     }
 
     return (
-        <Card style={{ width: "18rem" }}>
+        <div>
+
+            {movies && movies.map((movies)=>{
+        return (<Card style={{ width: "18rem" }}>
             <Card.Body>
                 <Card.Title> Title: {movies.title}</Card.Title>
                 <Card.Title>Comment :{movies.comment}</Card.Title>
@@ -42,6 +45,12 @@ export default function Favlist({ movies, getFavMovie }) {
                     Delete
                 </Button>
             </Card.Body>
-        </Card>
+        </Card >)
+    })
+    } 
+    
+            </div >
+
+
     );
 }
