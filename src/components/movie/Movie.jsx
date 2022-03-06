@@ -1,3 +1,4 @@
+import React from "react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Modalmovie from "../modalmovie/Modalmovie"
@@ -25,9 +26,8 @@ let Movie = ({ movies }) => {
                                 <Card.Img variant="top" src={movie.image} />
                                 <Card.Body>
                                     <Card.Title> Title: {movie.title}</Card.Title>
-                                    <Card.Title>It will be ready in:{recipe.readyInMinutes}</Card.Title>
                                     <Card.Text>
-                                        {movie.summary}
+                                        {movie.overview}
                                     </Card.Text>
                                     <Button variant="primary" onClick={() => handelChosenRecipe(movie)}>Add to Fav</Button>
                                 </Card.Body>
